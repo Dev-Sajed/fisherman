@@ -4575,12 +4575,12 @@
         map.on('locationerror', onLocationError);
         map.locate({
             watch: true,
-            setView: true,
-            maxZoom: 15,
             enableHighAccuracy: true,
             maximumAge: 10000,
             frequency: 1
         });
+        map.locate({setView: true,
+            maxZoom: 15});
     </script>
 </body>
 </html>

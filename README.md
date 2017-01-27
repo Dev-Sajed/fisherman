@@ -5,6 +5,8 @@ Intial Development
 
 Checkout the [DEMO] (https://vignesan.github.io/fisherman/)
 
+*More features coming soon*
+
 This project is to save the fisherman who crossing the international border. This project mainly focused and designed for the tamilnadu region.
 
 /CSS - Contains Stylesheet

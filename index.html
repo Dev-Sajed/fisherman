@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html manifest="fisherman.appcache">
 
@@ -4497,17 +4496,33 @@
         };
 
         var layer_geojson = L.geoJson(geojson);
-
-        layer_geojson.eachLayer(function(geojson) {
-            if (geojson.feature.properties.NAME == 'Feature') {
-                geojson.setStyle({
-                    fillColor: 'red'
-                })
-            }
-        });
         layer_geojson.addTo(map);
     </script>
-
+    <script>
+        var line = [
+            [9.54878403534322, 79.39595103263855],
+            [9.43130264772232, 79.48179781436919],
+            [9.43130264772232, 79.48180317878723],
+            [9.42356050233372, 79.48745727539061],
+            [9.36795802152142, 79.48000073432922],
+            [9.338247846782043, 79.47603106498718],
+            [9.306835831773379, 79.47182536125182],
+            [9.27973051010635, 79.4681990146637],
+            [9.2473390210391, 79.4638592004776],
+            [9.196241452438658, 79.45702493190765],
+            [9.181699799189593, 79.45507228374481],
+            [9.146735963121696, 79.45039451122283],
+            [9.146735963121696, 79.4504052400589],
+            [9.146672408636736, 79.45038378238678],
+            [8.984200862121476, 79.3748366832733],
+            [8.98419556351709, 79.3748366832733],
+            [9.022269331906722, 79.06915068626404]
+        ];
+        var style = {
+            color: 'red',
+        };
+        var polyline = L.polyline(line, style).addTo(map);
+    </script>
     <script>
         var current_position, current_accuracy;
 
@@ -4524,10 +4539,6 @@
             current_accuracy = L.circle(e.latlng, radius).addTo(map);
 
         }
-        /* setInterval(function() {
-                 onLocationFound(e)
-             }, 10000)*/
-        // onLocationFound();
 
         function onLocationError(e) {
             alert(e.message);
@@ -4551,9 +4562,6 @@
             maximumAge: 10000,
             frequency: 1
         });
-
-
-        //map.setView([11.6643, 78.1460], 7);
     </script>
 </body>
 

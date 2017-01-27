@@ -4571,16 +4571,20 @@
 
         map.setMaxBounds(geojson);
         map.fitBounds(geojson);*/
+        
+      function getLocation() {
         map.on('locationfound', onLocationFound);
         map.on('locationerror', onLocationError);
         map.locate({
             watch: true,
-            setView: false,
-            maxZoom: 15,
+            setView: true,
+            maxZoom: 10,
             enableHighAccuracy: true,
             maximumAge: 10000,
             frequency: 1
         });
+      }
     </script>
+     <input type="button" value="Locate me!" onClick="javascript:getLocation();">
 </body>
 </html>

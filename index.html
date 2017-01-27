@@ -33,7 +33,7 @@
 
             //			continuousWorld: true,
             noWrap: true,
-            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> | Developer,' + '<a href="https://github.com/vignesan">Vignesan</a> '
+            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> | Developer' + '<a href="https://github.com/vignesan"> Vignesan</a> '
         }).addTo(map);
 
         var geojson = {
@@ -5807,22 +5807,17 @@
             }]
         };
         var layer_geojson = L.geoJson(geojson);
-        layer_geojson.addTo(map);
+     
+        layer_geojson.eachLayer(function (geojson) {  
+  if(geojson.feature.properties.NAME == 'Feature') {    
+    geojson.setStyle({fillColor :'red'}) 
+  }
+});
+   layer_geojson.addTo(map);
     </script>
 
-
-
-
-
-
-
-
-
-
-
-
-
     <script>
+    
         var current_position, current_accuracy;
 
         function onLocationFound(e) {
@@ -5830,10 +5825,10 @@
                 map.removeLayer(current_position);
                 map.removeLayer(current_accuracy);
             }
-            var radius = e.accuracy / 200;
+            var radius = e.accuracy / 8;
 
             current_position = L.marker(e.latlng).addTo(map)
-                .bindPopup("You are within " + radius + " meters from this point").openPopup();
+               // .bindPopup("You are within " + radius + " meters from this point").openPopup();
 
             current_accuracy = L.circle(e.latlng, radius).addTo(map);
 
@@ -5859,8 +5854,8 @@
         map.on('locationerror', onLocationError);
         map.locate({
             watch: true,
-            setView: true,
-            maxZoom: 20,
+            setView: false,
+            maxZoom: 10,
             enableHighAccuracy: true,
             maximumAge: 10000,
             frequency: 1

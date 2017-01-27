@@ -1,0 +1,15 @@
+CACHE MANIFEST
+
+CACHE:
+
+css/images/marker-icon.png
+css/images/marker-icon-2x.png
+css/leaflet.css
+js/Leaflet.Geodesic.js
+js/leaflet.js
+
+NETWORK:
+https://a.tile.openstreetmap.org/{z}/{x}/{y}.png
+
+SETTINGS:
+prefer-online

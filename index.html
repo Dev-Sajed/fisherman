@@ -4496,14 +4496,6 @@
         };
 
         var layer_geojson = L.geoJson(geojson);
-
-        layer_geojson.eachLayer(function(geojson) {
-            if (geojson.feature.properties.NAME == 'Feature') {
-                geojson.setStyle({
-                    fillColor: 'red'
-                })
-            }
-        });
         layer_geojson.addTo(map);
     </script>
 
@@ -4523,10 +4515,6 @@
             current_accuracy = L.circle(e.latlng, radius).addTo(map);
 
         }
-        /* setInterval(function() {
-                 onLocationFound(e)
-             }, 10000)*/
-        // onLocationFound();
 
         function onLocationError(e) {
             alert(e.message);
@@ -4550,24 +4538,6 @@
             maximumAge: 10000,
             frequency: 1
         });
-
-        window.addEventListener('load', function(e) {
-            if (window.applicationCache) {
-                window.applicationCache.addEventListener('updateready', function(e) {
-                    if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
-                        // Browser downloaded a new app cache.
-                        // Swap it in and reload the page to get the new hotness.
-                        window.applicationCache.swapCache();
-                        if (confirm('A new version of this site is available. Load it?')) {
-                            window.location.reload();
-                        }
-                    } else {
-                        // Manifest didn't changed. Nothing new to server.
-                    }
-                }, false);
-            }
-        }, false);
-        //map.setView([11.6643, 78.1460], 7);
     </script>
 </body>
 

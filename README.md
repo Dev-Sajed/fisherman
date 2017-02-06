@@ -17,8 +17,8 @@ This project is to save the fisherman who crossing the international border. Thi
 
 
 Youtube Demo: 
-[Testing] (https://www.youtube.com/watch?v=B0AvqJRfAgU)
-[Demo] (https://www.youtube.com/watch?v=sJoA7ir2DNg)
+[Testing Demo] (https://www.youtube.com/watch?v=B0AvqJRfAgU) &
+[App Demo] (https://www.youtube.com/watch?v=sJoA7ir2DNg)
 
 
 Copyright 2017 Vignesan Selvam

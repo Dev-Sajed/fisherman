@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html manifest="fisherman.appcache">
+<html manifest="fisherman.appcache" type="text/cache-manifest">
 
 <head>
     <title>Fisher Man - by Vignesan Selvam</title>
@@ -8,6 +8,8 @@
 
     <link rel="stylesheet" href="./css/leaflet.css" />
     <link rel="stylesheet" href="./css/easy-button.css" />
+    <link rel="stylesheet" href="./js/sweetalert.css" />
+
     <style type="text/css">
         body {
             padding: 0;
@@ -24,6 +26,7 @@
     <script src="./js/leaflet.js"></script>
     <script src="./js/Leaflet.Geodesic.js"></script>
     <script src="./js/easy-button.js"></script>
+
     <script>
         window.addEventListener('load', function(e) {
             if (window.applicationCache) {
@@ -46,9 +49,12 @@
 
 <body>
     <div id="map"></div>
+    <audio id="siren" src="./alert/siren.mp3" preload="auto"></audio>
+    <script src="./js/sweetalert.min.js"></script>
     <script>
-    
-        var map = L.map('map').setView([11.6643, 78.1460], 7);
+        var map = L.map('map', {
+            dragging: true
+        }).setView([11.6643, 78.1460], 7);
         L.tileLayer('https://a.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 15,
             noWrap: true,
@@ -4517,8 +4523,19 @@
         var layer_geojson = L.geoJson(geojson);
         layer_geojson.addTo(map);
     </script>
+
     <script>
         var line = [
+            [10.096414993994621, 80.03960609436035],
+            [9.974514392128858, 79.67140316963196],
+            [9.974514392128858, 79.67139780521393],
+            [9.973193555878614, 79.66742277145386],
+            [9.973188272522851, 79.66741740703581],
+            [9.923246172802008, 79.55982327461243],
+            [9.923092932021811, 79.55969989299774],
+            [9.666521057497755, 79.37810897827148],
+            [9.666378274644726, 79.37810897827148],
+            [9.548799905620326, 79.3959242105484],
             [9.54878403534322, 79.39595103263855],
             [9.43130264772232, 79.48179781436919],
             [9.43130264772232, 79.48180317878723],
@@ -4537,13 +4554,28 @@
             [8.98419556351709, 79.3748366832733],
             [9.022269331906722, 79.06915068626404]
         ];
+
         var style = {
             color: 'red',
         };
+
         var polyline = L.polyline(line, style).addTo(map);
     </script>
+
     <script>
         var current_position, current_accuracy;
+
+        function fisherman() {
+            document.getElementById('siren').play();
+
+            sweetAlert({
+                title: "STOP",
+                text: "STOP THE BOAT IMMEDIATELY",
+                imageUrl: "./css/images/stop.png",
+                // timer: 21000,
+                showConfirmButton: true,
+            });
+        }
 
         function onLocationFound(e) {
             if (current_position) {
@@ -4553,10 +4585,33 @@
             var radius = e.accuracy / 8;
 
             current_position = L.marker(e.latlng).addTo(map);
-            
-                // .bindPopup("You are within " + radius + " meters from this point").openPopup();
+
+            // .bindPopup("You are within " + radius + " meters from this point").openPopup();
 
             current_accuracy = L.circle(e.latlng, radius).addTo(map);
+
+            map.setView(e.latlng, 10, map.getZoom(), {
+                "animate": true,
+                "pan": {
+                    "duration": 5
+                }
+            });
+
+            //Horizontal mapping lines on Earth are lines of latitude.
+            //Vertical mapping lines on Earth are lines of longitude, known as "meridians".
+
+            var lng = e.latlng.lng;
+            lng = Math.floor(lng * 100000 + 0.5) / 100000;
+            var lat = e.latlng.lat;
+            lat = Math.floor(lat * 100000 + 0.5) / 100000;
+
+            if ((lat >= 8.964436529387473 && lat <= 10.108134086078973) & (lng >= 79.06585693359375 && lng <= 80.08071899414062)) {
+                fisherman();
+            } else {
+                //alert("worked");
+            }
+
+
 
         }
 
@@ -4564,63 +4619,21 @@
             alert(e.message);
         }
 
-        /*var maxBounds = L.latLngBounds(
-            L.latLng(
-                13.453737213419249, 78.92578124999999),
-            L.latLng(
-                6.970049417296232, 78.936767578125));
-
-        map.setMaxBounds(geojson);
-        map.fitBounds(geojson);*/
         map.on('locationfound', onLocationFound);
         map.on('locationerror', onLocationError);
-      // map.setView(e.latlng,17);
-       L.easyButton('<img src="./css/images/locate.png">', function (btn, map) {
 
-        map.locate({
-            watch: true,
-            //setView: true,
-            maxZoom: 14,
-            enableHighAccuracy: true,
-            maximumAge: 10000,
-            frequency: 1
-        });
+        L.easyButton('<img src="./css/images/locate.png">', function(btn, map) {
+            map.locate({
+                watch: true,
+                //dragging: false,
+                //setView: true,
+                maxZoom: 14,
+                enableHighAccuracy: true,
+                maximumAge: 20000,
+                frequency: 1,
+            });
         }).addTo(map);
-       
     </script>
-    <script>
-       /* L.easyButton({
-  states:[
-    {
-      stateName: 'unloaded',
-      icon: 'fa-location-arrow',
-      title: 'load image',
-      onClick: function(control){
-        control.state("loading");
-        control._map.on('locationfound', function(e){
-          this.setView(e.latlng, 17);
-          control.state('loaded');
-        });
-        control._map.on('locationerror', function(){
-          control.state('error');
-        });
-        control._map.locate()
-      }
-    }, {
-      stateName: 'loading',
-      icon: 'fa-spinner fa-spin'
-    }, {
-      stateName: 'loaded',
-      icon: 'fa-thumbs-up'
-    }, {
-      stateName: 'error',
-      icon: 'fa-frown-o',
-      title: 'location not found'
-    }
-  ]
-}).addTo(map);*/
-        </script>
-
 
 </body>
 

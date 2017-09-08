@@ -16,10 +16,6 @@ This project is to save the fisherman who crossing the international border. Thi
 /JSON - Contains Boundary lines
 
 
-Youtube Demo: 
-[Testing Demo] (https://www.youtube.com/watch?v=B0AvqJRfAgU) &
-[App Demo] (https://www.youtube.com/watch?v=sJoA7ir2DNg)
-
 
 Copyright 2017 Vignesan Selvam
 
